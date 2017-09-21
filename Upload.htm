@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Preview images</title>
+    <style>
+        #gallery .thumbnail{
+            width:200px;
+            height: 200px;
+            float:left;
+            margin:10px;
+			border:1px solid;
+        }
+        #gallery .thumbnail img{
+            width:200px;
+            height:200px;
+        }
+     </style>
+</head>
+
+<body>
+ <h2>Upload Image</h2>
+ <input type="file" id="fileinput" multiple="multiple" accept="image/*" />
+ <div id="gallery"></div>
+ <script>function previewImage(file){
+        var gallery = document.getElementById("gallery");
+        var div = document.createElement("div");
+        var img = document.createElement("img");
+        div.classList.add('thumbnail');
+        div.appendChild(img);
+        gallery.appendChild(div);
+        
+		var reader = new FileReader();
+        reader.onload = (function(f){
+		 return function(e) { 
+		f.src = e.target.result;
+      		 };})(img);
+        
+		reader.readAsDataURL(file);
+    }
+
+    document.getElementById('fileinput').onchange=
+	   function(){
+                   for(var i=0; i<this.files.length; i++){
+                   previewImage(this.files[i]);
+				}
+    };
+ </script>
+</body>
+</html>
